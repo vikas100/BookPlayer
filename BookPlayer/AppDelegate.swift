@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        DataManager.processFile(at: url)
+        ImportManager.shared.process(url)
 
         return true
     }
@@ -236,11 +236,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func setupDocumentListener() {
-        let documentsUrl = DataManager.getDocumentsFolderURL()
+        let documentsUrl = ImportManager.shared.getDocumentsFolderURL()
         self.watcher = DirectoryWatcher.watch(documentsUrl)
         self.watcher?.onNewFiles = { newFiles in
             for url in newFiles {
-                DataManager.processFile(at: url)
+                ImportManager.shared..process(url)
             }
         }
     }
