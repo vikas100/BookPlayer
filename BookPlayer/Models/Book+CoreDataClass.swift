@@ -50,9 +50,7 @@ public class Book: LibraryItem {
 
     // TODO: This is a makeshift version of a proper completion property.
     // See https://github.com/TortugaPower/BookPlayer/issues/201
-    var isCompleted: Bool {
-        return round(self.currentTime) >= round(self.duration)
-    }
+    
 
     func setChapters(from asset: AVAsset, context: NSManagedObjectContext) {
         for locale in asset.availableChapterLocales {
@@ -82,6 +80,7 @@ public class Book: LibraryItem {
         let fileURL = bookUrl.processedUrl!
         self.ext = fileURL.pathExtension
         self.identifier = fileURL.lastPathComponent
+        self.isComplete = false
         let asset = AVAsset(url: fileURL)
 
         let titleFromMeta = AVMetadataItem.metadataItems(from: asset.metadata, withKey: AVMetadataKey.commonKeyTitle, keySpace: AVMetadataKeySpace.common).first?.value?.copy(with: nil) as? String
