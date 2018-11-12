@@ -115,7 +115,7 @@ public class Library: NSManagedObject, Codable {
         guard let contextUserInfoKey = CodingUserInfoKey.context,
             let managedObjectContext = decoder.userInfo[contextUserInfoKey] as? NSManagedObjectContext,
             let entity = NSEntityDescription.entity(forEntityName: "Library", in: managedObjectContext) else {
-                fatalError("Failed to decode Library")
+            fatalError("Failed to decode Library")
         }
         self.init(entity: entity, insertInto: nil)
 

@@ -6,8 +6,8 @@
 //  Copyright © 2018 Tortuga Power. All rights reserved.
 //
 
-import UIKit
 import BookPlayerKit
+import UIKit
 
 class PlayerControlsViewController: PlayerContainerViewController, UIGestureRecognizerDelegate {
     @IBOutlet private weak var artworkControl: ArtworkControl!

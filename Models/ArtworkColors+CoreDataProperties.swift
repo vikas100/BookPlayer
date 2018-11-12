@@ -21,5 +21,4 @@ extension ArtworkColors {
     @NSManaged public var secondaryHex: String!
     @NSManaged public var tertiaryHex: String!
     @NSManaged public var book: Book?
-
 }

@@ -6,11 +6,11 @@
 //  Copyright © 2016 Tortuga Power. All rights reserved.
 //
 
+import BookPlayerKit
+import CoreData
 import MediaPlayer
 import SwiftReorder
 import UIKit
-import BookPlayerKit
-import CoreData
 
 // swiftlint:disable file_length
 
@@ -92,6 +92,28 @@ class LibraryViewController: BaseListViewController, UIGestureRecognizerDelegate
             if UserDefaults.standard.bool(forKey: Constants.UserActivityPlayback) {
                 UserDefaults.standard.removeObject(forKey: Constants.UserActivityPlayback)
                 PlayerManager.shared.play()
+            }
+        }
+    }
+
+    /**
+     *  Migrates existing stack into the new container app groups.
+     *  In case it fails, it loads all the files from the Processed folder
+     */
+    func migrateCoreDataStack() {
+        ImportManager.shared.makeFilesPublic()
+        do {
+            try DataManager.migrateStack()
+        } catch {
+            // Migration failed, fallback: load all books from processed folder
+            if let fileUrls = ImportManager.shared.getFiles(from: ImportManager.shared.getProcessedFolderURL()) {
+                let fileItems = fileUrls.map { (url) -> FileItem in
+                    return FileItem(originalUrl: url, processedUrl: url, destinationFolder: url)
+                }
+
+                ImportManager.shared.insertBooks(from: fileItems, into: self.library) {
+                    self.reloadData()
+                }
             }
         }
     }

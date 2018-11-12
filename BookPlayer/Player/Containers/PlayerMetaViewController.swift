@@ -6,9 +6,9 @@
 //  Copyright © 2018 Tortuga Power. All rights reserved.
 //
 
+import BookPlayerKit
 import MarqueeLabelSwift
 import UIKit
-import BookPlayerKit
 
 class PlayerMetaViewController: PlayerContainerViewController {
     @IBOutlet private weak var authorLabel: BPMarqueeLabel!

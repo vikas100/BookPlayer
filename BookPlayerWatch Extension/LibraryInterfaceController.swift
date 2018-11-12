@@ -6,11 +6,11 @@
 //  Copyright © 2018 Tortuga Power. All rights reserved.
 //
 
-import WatchKit
-import Foundation
-import BookPlayerKitWatch
 import AVFoundation
+import BookPlayerKitWatch
+import Foundation
 import WatchConnectivity
+import WatchKit
 
 class LibraryInterfaceController: WKInterfaceController {
     @IBOutlet weak var playlistHeader: WKInterfaceGroup!
@@ -49,8 +49,8 @@ class LibraryInterfaceController: WKInterfaceController {
             self.library = library
         }
 
-        watchSession.delegate = self
-        watchSession.activate()
+        self.watchSession.delegate = self
+        self.watchSession.activate()
 
         self.setupLibraryTable()
     }
@@ -84,13 +84,19 @@ class LibraryInterfaceController: WKInterfaceController {
 
         guard let playlist = item as? Playlist,
             let books = playlist.books?.array as? [Book] else {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "derp"), object: nil)
+            // swiftlint:disable force_cast
+            let book = item as! Book
+            self.play(book)
             return
         }
         self.playlistItems = books
         self.playlistHeaderTitle.setText("< \(playlist.title!)")
         self.setupPlaylistTable()
         self.showPlaylist(true)
+    }
+
+    func play(_ book: Book) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "derp"), object: nil)
     }
 
     @IBAction func collapsePlaylist() {
@@ -113,9 +119,9 @@ class LibraryInterfaceController: WKInterfaceController {
         }
 
         self.animate(withDuration: 0.3, animations: {
-            self.playlistHeader.setHidden(!show)//!flag
-            self.spacerGroupView.setRelativeHeight(height, withAdjustment: 0.0)//height
-            self.libraryTableView.setHidden(show)//flag
+            self.playlistHeader.setHidden(!show) //!flag
+            self.spacerGroupView.setRelativeHeight(height, withAdjustment: 0.0) //height
+            self.libraryTableView.setHidden(show) //flag
         }) {
             if !show {
                 self.playlistTableView.setHidden(true)
@@ -147,7 +153,7 @@ extension LibraryInterfaceController: WCSessionDelegate {
     }
 
     func decodeLibrary(_ data: Data?) -> Library? {
-        guard let data = data  else { return nil }
+        guard let data = data else { return nil }
 
         let bgContext = DataManager.getBackgroundContext()
         let decoder = JSONDecoder()
@@ -166,7 +172,7 @@ extension LibraryInterfaceController: WCSessionDelegate {
 
 extension WKInterfaceController {
     func animate(withDuration duration: TimeInterval, animations: @escaping () -> Void, completion: @escaping () -> Void) {
-        animate(withDuration: duration, animations: animations)
+        self.animate(withDuration: duration, animations: animations)
         let derp = DispatchTime.now() + duration
         DispatchQueue.main.asyncAfter(deadline: derp, execute: completion)
     }

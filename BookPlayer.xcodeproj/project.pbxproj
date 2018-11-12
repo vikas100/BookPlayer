@@ -20,7 +20,7 @@
 		41219B2A2154678700B19BD5 /* ArtworkColors+ColorCube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219B292154678700B19BD5 /* ArtworkColors+ColorCube.swift */; };
 		41219B2F21546A9400B19BD5 /* Book+ArtworkColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219B2E21546A9400B19BD5 /* Book+ArtworkColors.swift */; };
 		41219B42215533D000B19BD5 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4136163F1D2E21F000E48944 /* LibraryViewController.swift */; };
-		41219B9E2155A53900B19BD5 /* BookPlayerKit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41219B9B2155A53800B19BD5 /* BookPlayerKit.xcdatamodeld */; };
+		41219B9E2155A53900B19BD5 /* BookPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41219B9B2155A53800B19BD5 /* BookPlayer.xcdatamodeld */; };
 		41219BAB2155A5BD00B19BD5 /* ArtworkColors+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219B9F2155A5BD00B19BD5 /* ArtworkColors+CoreDataClass.swift */; };
 		41219BAC2155A5BD00B19BD5 /* ArtworkColors+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BA02155A5BD00B19BD5 /* ArtworkColors+CoreDataProperties.swift */; };
 		41219BAD2155A5BD00B19BD5 /* Library+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BA12155A5BD00B19BD5 /* Library+CoreDataClass.swift */; };
@@ -36,13 +36,13 @@
 		41219BB92155A69200B19BD5 /* UIColor+Sweetercolor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BB72155A69100B19BD5 /* UIColor+Sweetercolor.swift */; };
 		41219BBA2155A69200B19BD5 /* UIColor+BookPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BB82155A69100B19BD5 /* UIColor+BookPlayer.swift */; };
 		41219BBC2155A8CC00B19BD5 /* FileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BBB2155A8CC00B19BD5 /* FileItem.swift */; };
-		41219BBD2155AD6000B19BD5 /* BookPlayerKit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41219B9B2155A53800B19BD5 /* BookPlayerKit.xcdatamodeld */; };
+		41219BBD2155AD6000B19BD5 /* BookPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41219B9B2155A53800B19BD5 /* BookPlayer.xcdatamodeld */; };
 		41219BD72155EC4100B19BD5 /* BookPlayerKitWatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 41219BD52155EC4100B19BD5 /* BookPlayerKitWatch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41219BDA2155EC4100B19BD5 /* BookPlayerKitWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41219BD32155EC4100B19BD5 /* BookPlayerKitWatch.framework */; };
 		41219BDB2155EC4100B19BD5 /* BookPlayerKitWatch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41219BD32155EC4100B19BD5 /* BookPlayerKitWatch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		41219BE12155EC5E00B19BD5 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410D0FEE1EDDBC3300A52EB9 /* DataManager.swift */; };
 		41219BE22155EC6100B19BD5 /* FileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BBB2155A8CC00B19BD5 /* FileItem.swift */; };
-		41219BE32155EC6900B19BD5 /* BookPlayerKit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41219B9B2155A53800B19BD5 /* BookPlayerKit.xcdatamodeld */; };
+		41219BE32155EC6900B19BD5 /* BookPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41219B9B2155A53800B19BD5 /* BookPlayer.xcdatamodeld */; };
 		41219BE42155EC6D00B19BD5 /* ArtworkColors+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219B9F2155A5BD00B19BD5 /* ArtworkColors+CoreDataClass.swift */; };
 		41219BE52155EC6F00B19BD5 /* ArtworkColors+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BA02155A5BD00B19BD5 /* ArtworkColors+CoreDataProperties.swift */; };
 		41219BE62155EC7200B19BD5 /* Library+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BA12155A5BD00B19BD5 /* Library+CoreDataClass.swift */; };
@@ -57,7 +57,7 @@
 		41219BEF2155EC8B00B19BD5 /* Chapter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BAA2155A5BD00B19BD5 /* Chapter+CoreDataProperties.swift */; };
 		41219BF02155EC9300B19BD5 /* UIColor+BookPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BB82155A69100B19BD5 /* UIColor+BookPlayer.swift */; };
 		41219BF12155EC9600B19BD5 /* UIColor+Sweetercolor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41219BB72155A69100B19BD5 /* UIColor+Sweetercolor.swift */; };
-		41219BF32155EF9B00B19BD5 /* BookPlayerKit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41219B9B2155A53800B19BD5 /* BookPlayerKit.xcdatamodeld */; };
+		41219BF32155EF9B00B19BD5 /* BookPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41219B9B2155A53800B19BD5 /* BookPlayer.xcdatamodeld */; };
 		412451841D489204008AC0E5 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 412451821D489204008AC0E5 /* Crashlytics.framework */; };
 		4135407C21722D2100C38F4D /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4135407B21722D2100C38F4D /* ComplicationController.swift */; };
 		4135407E2172B76F00C38F4D /* ItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4135407D2172B76F00C38F4D /* ItemRow.swift */; };
@@ -474,20 +474,12 @@
 			path = FileManagement;
 			sourceTree = "<group>";
 		};
-		417D67CF215D39C5000E64F0 /* BookPlayerUITests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BookPlayerUITests;
-			sourceTree = "<group>";
-		};
 		418B6CEF1D2707F700F974FB = {
 			isa = PBXGroup;
 			children = (
 				C3EF536020800DCC00B9629D /* Meta */,
 				418B6CFA1D2707F800F974FB /* BookPlayer */,
 				418B6D111D2707F800F974FB /* BookPlayerTests */,
-				417D67CF215D39C5000E64F0 /* BookPlayerUITests */,
 				41A392A9215431790025F38F /* BookPlayerWatch */,
 				41A392B82154317B0025F38F /* BookPlayerWatch Extension */,
 				41219BF22155ECD200B19BD5 /* Shared */,
@@ -674,7 +666,7 @@
 		C3AA3732207BF7670004DCFD /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				41219B9B2155A53800B19BD5 /* BookPlayerKit.xcdatamodeld */,
+				41219B9B2155A53800B19BD5 /* BookPlayer.xcdatamodeld */,
 				41219B9F2155A5BD00B19BD5 /* ArtworkColors+CoreDataClass.swift */,
 				41219BA02155A5BD00B19BD5 /* ArtworkColors+CoreDataProperties.swift */,
 				41219BA12155A5BD00B19BD5 /* Library+CoreDataClass.swift */,
@@ -1154,7 +1146,7 @@
 				41219BBA2155A69200B19BD5 /* UIColor+BookPlayer.swift in Sources */,
 				41219BAC2155A5BD00B19BD5 /* ArtworkColors+CoreDataProperties.swift in Sources */,
 				41219BAF2155A5BD00B19BD5 /* Book+CoreDataClass.swift in Sources */,
-				41219B9E2155A53900B19BD5 /* BookPlayerKit.xcdatamodeld in Sources */,
+				41219B9E2155A53900B19BD5 /* BookPlayer.xcdatamodeld in Sources */,
 				41219BAB2155A5BD00B19BD5 /* ArtworkColors+CoreDataClass.swift in Sources */,
 				41219BB22155A5BD00B19BD5 /* Playlist+CoreDataProperties.swift in Sources */,
 				41219BB12155A5BD00B19BD5 /* Playlist+CoreDataClass.swift in Sources */,
@@ -1189,7 +1181,7 @@
 				41219BE92155EC7B00B19BD5 /* Book+CoreDataProperties.swift in Sources */,
 				41219BE82155EC7800B19BD5 /* Book+CoreDataClass.swift in Sources */,
 				41219BE52155EC6F00B19BD5 /* ArtworkColors+CoreDataProperties.swift in Sources */,
-				41219BE32155EC6900B19BD5 /* BookPlayerKit.xcdatamodeld in Sources */,
+				41219BE32155EC6900B19BD5 /* BookPlayer.xcdatamodeld in Sources */,
 				41219BEC2155EC8400B19BD5 /* LibraryItem+CoreDataClass.swift in Sources */,
 				41219BE12155EC5E00B19BD5 /* DataManager.swift in Sources */,
 				41219BE72155EC7500B19BD5 /* Library+CoreDataProperties.swift in Sources */,
@@ -1219,7 +1211,7 @@
 				C30EEEC02079645C00A4ED33 /* PlayerControlsViewController.swift in Sources */,
 				41219B2F21546A9400B19BD5 /* Book+ArtworkColors.swift in Sources */,
 				C318DDBC20A48D4700C3A17B /* BPMarqueeLabel.swift in Sources */,
-				41219BBD2155AD6000B19BD5 /* BookPlayerKit.xcdatamodeld in Sources */,
+				41219BBD2155AD6000B19BD5 /* BookPlayer.xcdatamodeld in Sources */,
 				C375AF1920DD99E000AC034D /* ArtworkControl.swift in Sources */,
 				C3A479152094CA3800D92122 /* UIImage+BookPlayer.swift in Sources */,
 				418B6CFC1D2707F800F974FB /* AppDelegate.swift in Sources */,
@@ -1272,7 +1264,7 @@
 				41A392BC2154317B0025F38F /* ExtensionDelegate.swift in Sources */,
 				4135407C21722D2100C38F4D /* ComplicationController.swift in Sources */,
 				4135407E2172B76F00C38F4D /* ItemRow.swift in Sources */,
-				41219BF32155EF9B00B19BD5 /* BookPlayerKit.xcdatamodeld in Sources */,
+				41219BF32155EF9B00B19BD5 /* BookPlayer.xcdatamodeld in Sources */,
 				41A392BA2154317B0025F38F /* LibraryInterfaceController.swift in Sources */,
 				411EE7C9217AFE65004C86E7 /* WatchConnectivityService.swift in Sources */,
 			);
@@ -2165,14 +2157,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		41219B9B2155A53800B19BD5 /* BookPlayerKit.xcdatamodeld */ = {
+		41219B9B2155A53800B19BD5 /* BookPlayer.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				41219B9C2155A53800B19BD5 /* BookPlayerKit.xcdatamodel */,
 				41219B9D2155A53800B19BD5 /* 1.xcdatamodel */,
 			);
 			currentVersion = 41219B9C2155A53800B19BD5 /* BookPlayerKit.xcdatamodel */;
-			path = BookPlayerKit.xcdatamodeld;
+			path = BookPlayer.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

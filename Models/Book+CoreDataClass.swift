@@ -7,8 +7,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Book)
 public class Book: LibraryItem {
@@ -44,13 +44,13 @@ public class Book: LibraryItem {
         return !(self.chapters?.array.isEmpty ?? true)
     }
 
-    override public func getBookToPlay() -> Book? {
+    public override func getBookToPlay() -> Book? {
         return self
     }
 
     // TODO: This is a makeshift version of a proper completion property.
     // See https://github.com/TortugaPower/BookPlayer/issues/201
-    override public var isCompleted: Bool {
+    public override var isCompleted: Bool {
         return round(self.currentTime) >= round(self.duration)
     }
 
@@ -79,7 +79,7 @@ public class Book: LibraryItem {
         guard let contextUserInfoKey = CodingUserInfoKey.context,
             let managedObjectContext = decoder.userInfo[contextUserInfoKey] as? NSManagedObjectContext,
             let entity = NSEntityDescription.entity(forEntityName: "Book", in: managedObjectContext) else {
-                fatalError("Failed to decode Book!")
+            fatalError("Failed to decode Book!")
         }
         self.init(entity: entity, insertInto: nil)
 

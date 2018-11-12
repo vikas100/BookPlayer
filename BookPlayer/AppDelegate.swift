@@ -7,10 +7,10 @@
 //
 
 import AVFoundation
+import BookPlayerKit
 import DirectoryWatcher
 import MediaPlayer
 import UIKit
-import BookPlayerKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -253,7 +253,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.watcher = DirectoryWatcher.watch(documentsUrl)
         self.watcher?.onNewFiles = { newFiles in
             for url in newFiles {
-                ImportManager.shared..process(url)
+                ImportManager.shared.process(url)
             }
         }
     }

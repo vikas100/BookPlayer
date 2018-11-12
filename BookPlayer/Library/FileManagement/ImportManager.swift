@@ -6,8 +6,8 @@
 //  Copyright © 2018 Tortuga Power. All rights reserved.
 //
 
-import Foundation
 import BookPlayerKit
+import Foundation
 
 /**
  Handles the creation of ImportOperation objects.
@@ -22,6 +22,7 @@ class ImportManager: NSObject {
     private let processedFolderName = "Processed"
 
     // MARK: - Folder URLs
+
     func getDocumentsFolderURL() -> URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
@@ -107,7 +108,7 @@ class ImportManager: NSObject {
             return nil
         }
 
-        return filterFiles(urls)
+        return self.filterFiles(urls)
     }
 
     /**
@@ -134,6 +135,7 @@ class ImportManager: NSObject {
     }
 
     // MARK: - Files
+
     /**
      Creates a book for each URL and adds it to the specified playlist. If no playlist is specified, it will be added to the library.
 
@@ -144,7 +146,7 @@ class ImportManager: NSObject {
      - Parameter library: `Library` to which the created `Book` will be added if the parameter `playlist` is nil
      - Parameter completion: Closure fired after processing all the urls.
      */
-    func insertBooks(from files: [FileItem], into playlist: Playlist?, or library: Library, completion:@escaping () -> Void) {
+    func insertBooks(from files: [FileItem], into playlist: Playlist?, or library: Library, completion: @escaping () -> Void) {
         let context = DataManager.getContext()
 
         for file in files {
@@ -152,7 +154,7 @@ class ImportManager: NSObject {
             guard let url = file.processedUrl else { continue }
 
             // Check if book exists in the library
-            guard  let item = library.getItem(with: url) else {
+            guard let item = library.getItem(with: url) else {
                 let book = Book(from: file, context: context)
 
                 if let playlist = playlist {
@@ -166,16 +168,16 @@ class ImportManager: NSObject {
 
             guard let storedPlaylist = item as? Playlist,
                 let storedBook = storedPlaylist.getBook(with: url) else {
-                    // swiftlint:disable force_cast
-                    // Handle if item is a book
-                    let storedBook = item as! Book
+                // swiftlint:disable force_cast
+                // Handle if item is a book
+                let storedBook = item as! Book
 
-                    if let playlist = playlist {
-                        library.removeFromItems(storedBook)
-                        playlist.addToBooks(storedBook)
-                    }
+                if let playlist = playlist {
+                    library.removeFromItems(storedBook)
+                    playlist.addToBooks(storedBook)
+                }
 
-                    continue
+                continue
             }
 
             // Handle if book already exists in the library
@@ -186,7 +188,6 @@ class ImportManager: NSObject {
             } else {
                 library.addToItems(storedBook)
             }
-
         }
 
         DataManager.saveContext()
@@ -203,7 +204,7 @@ class ImportManager: NSObject {
      - Parameter library: `Library` to which the created `Book` will be added
      - Parameter completion: Closure fired after processing all the urls.
      */
-    func insertBooks(from files: [FileItem], into library: Library, completion:@escaping () -> Void) {
+    func insertBooks(from files: [FileItem], into library: Library, completion: @escaping () -> Void) {
         self.insertBooks(from: files, into: nil, or: library, completion: completion)
     }
 
@@ -214,7 +215,7 @@ class ImportManager: NSObject {
      - Parameter playlist: `Playlist` to which the created `Book` will be added
      - Parameter completion: Closure fired after processing all the urls.
      */
-    func insertBooks(from files: [FileItem], into playlist: Playlist, completion:@escaping () -> Void) {
+    func insertBooks(from files: [FileItem], into playlist: Playlist, completion: @escaping () -> Void) {
         self.insertBooks(from: files, into: playlist, or: playlist.library!, completion: completion)
     }
 

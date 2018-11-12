@@ -7,9 +7,9 @@
 //
 
 import AVFoundation
+import BookPlayerKit
 import Foundation
 import MediaPlayer
-import BookPlayerKit
 
 // swiftlint:disable file_length
 

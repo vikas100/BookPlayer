@@ -6,9 +6,9 @@
 // Copyright © 2016 Tortuga Power. All rights reserved.
 //
 
+import BookPlayerKit
 import MediaPlayer
 import UIKit
-import BookPlayerKit
 
 class ChaptersViewController: UITableViewController {
     var chapters: [Chapter]!

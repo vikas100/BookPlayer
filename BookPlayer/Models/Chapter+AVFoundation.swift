@@ -6,10 +6,10 @@
 //  Copyright © 2018 Tortuga Power. All rights reserved.
 //
 
-import Foundation
 import AVFoundation
-import CoreData
 import BookPlayerKit
+import CoreData
+import Foundation
 
 extension Chapter {
     public convenience init(from asset: AVAsset, context: NSManagedObjectContext) {

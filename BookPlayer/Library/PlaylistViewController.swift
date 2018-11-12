@@ -6,8 +6,8 @@
 //  Copyright © 2018 Tortuga Power. All rights reserved.
 //
 
-import UIKit
 import BookPlayerKit
+import UIKit
 
 class PlaylistViewController: BaseListViewController {
     var playlist: Playlist!
@@ -38,12 +38,7 @@ class PlaylistViewController: BaseListViewController {
         let alert = UIAlertController(title: "Import \(files.count) files into", message: nil, preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "Library", style: .default) { _ in
-<<<<<<< HEAD
-            DataManager.insertBooks(from: files, into: self.library) {
-=======
             ImportManager.shared.insertBooks(from: files, into: self.library) {
-                self.showLoadView(false)
->>>>>>> Move DataManager into shared dynamic framework
                 self.reloadData()
                 self.showLoadView(false)
                 NotificationCenter.default.post(name: .reloadData, object: nil)

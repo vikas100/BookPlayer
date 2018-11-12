@@ -13,7 +13,7 @@ import UIKit
 
 @objc(Playlist)
 public class Playlist: LibraryItem {
-    override public var artwork: UIImage {
+    public override var artwork: UIImage {
         guard let books = self.books?.array as? [Book], let book = books.first(where: { (book) -> Bool in
             !book.usesDefaultArtwork
         }) else {
@@ -128,7 +128,7 @@ public class Playlist: LibraryItem {
         return self.getBook(at: index)
     }
 
-    override public func getBookToPlay() -> Book? {
+    public override func getBookToPlay() -> Book? {
         guard let books = self.books else { return nil }
 
         for item in books {
@@ -183,7 +183,7 @@ public class Playlist: LibraryItem {
         guard let contextUserInfoKey = CodingUserInfoKey.context,
             let managedObjectContext = decoder.userInfo[contextUserInfoKey] as? NSManagedObjectContext,
             let entity = NSEntityDescription.entity(forEntityName: "Playlist", in: managedObjectContext) else {
-                fatalError("Failed to decode Playlist!")
+            fatalError("Failed to decode Playlist!")
         }
         self.init(entity: entity, insertInto: nil)
 

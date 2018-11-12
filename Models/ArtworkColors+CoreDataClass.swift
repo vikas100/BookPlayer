@@ -7,8 +7,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 import UIKit
 
 public enum ArtworkColorsError: Error {
@@ -20,12 +20,15 @@ public class ArtworkColors: NSManagedObject, Codable {
     public var background: UIColor {
         return UIColor(hex: self.backgroundHex)
     }
+
     public var primary: UIColor {
         return UIColor(hex: self.primaryHex)
     }
+
     public var secondary: UIColor {
         return UIColor(hex: self.secondaryHex)
     }
+
     public var tertiary: UIColor {
         return UIColor(hex: self.tertiaryHex)
     }
@@ -83,7 +86,7 @@ public class ArtworkColors: NSManagedObject, Codable {
         guard let contextUserInfoKey = CodingUserInfoKey.context,
             let managedObjectContext = decoder.userInfo[contextUserInfoKey] as? NSManagedObjectContext,
             let entity = NSEntityDescription.entity(forEntityName: "ArtworkColors", in: managedObjectContext) else {
-                fatalError("Failed to decode Library")
+            fatalError("Failed to decode Library")
         }
         self.init(entity: entity, insertInto: nil)
 

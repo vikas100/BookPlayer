@@ -6,10 +6,10 @@
 //  Copyright © 2018 Tortuga Power. All rights reserved.
 //
 
+import BookPlayerKit
 import ColorCube
 import CoreData
 import Foundation
-import BookPlayerKit
 
 extension ArtworkColors {
     // W3C recommends contrast values larger 4 or 7 (strict), but 3.0 should be fine for our use case

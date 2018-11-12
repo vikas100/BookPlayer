@@ -18,6 +18,7 @@ public class FileItem {
         self.processedUrl = processedUrl
         self.destinationFolder = destinationFolder
     }
+
     public convenience init(_ url: URL, destinationFolder: URL) {
         self.init(originalUrl: url, processedUrl: nil, destinationFolder: destinationFolder)
     }

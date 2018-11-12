@@ -9,7 +9,6 @@
 import WatchConnectivity
 
 class WatchConnectivityService: NSObject, WCSessionDelegate {
-
     static let shared = WatchConnectivityService()
     private override init() {
         super.init()
@@ -18,7 +17,6 @@ class WatchConnectivityService: NSObject, WCSessionDelegate {
     private let session: WCSession? = WCSession.isSupported() ? WCSession.default : nil
 
     private var validSession: WCSession? {
-
         // paired - the user has to have their device paired to the watch
         // watchAppInstalled - the user must have your watch app installed
 
@@ -32,16 +30,19 @@ class WatchConnectivityService: NSObject, WCSessionDelegate {
     }
 
     func startSession() {
-        session?.delegate = self
-        session?.activate()
+        self.session?.delegate = self
+        self.session?.activate()
     }
+
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         print("======= activated")
         print(error)
     }
+
     func sessionDidBecomeInactive(_ session: WCSession) {
         print("====== inactive")
     }
+
     func sessionDidDeactivate(_ session: WCSession) {
         print("====== deactivating")
     }

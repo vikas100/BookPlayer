@@ -6,17 +6,22 @@
 //  Copyright © 2017 Tortuga Power. All rights reserved.
 //
 
-import Foundation
 import AVFoundation
-import UIKit
 import CoreData
+import Foundation
+import UIKit
 
 public class DataManager {
     static let queue = OperationQueue()
 
     // MARK: - Folder URLs
 
+    private static var storeUrl: URL {
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.tortugapower.audiobookplayer.files")!.appendingPathComponent("BookPlayer.sqlite")
+    }
+
     // MARK: - Operations
+
     public class func start(_ operation: Operation) {
         self.queue.addOperation(operation)
     }
@@ -27,14 +32,35 @@ public class DataManager {
 
     // MARK: - Core Data stack
 
+    public class func migrateStack() throws {
+        let name = "BookPlayer"
+        let container = NSPersistentContainer(name: name)
+        let psc = container.persistentStoreCoordinator
+
+        let oldStoreUrl = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).last!
+            .appendingPathComponent("\(name).sqlite")
+
+        let options = [
+            NSMigratePersistentStoresAutomaticallyOption: true,
+            NSInferMappingModelAutomaticallyOption: true
+        ]
+
+        guard let oldStore = try? psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: oldStoreUrl, options: options) else {
+            // couldn't load old store
+            return
+        }
+
+        try psc.migratePersistentStore(oldStore, to: self.storeUrl, options: nil, withType: NSSQLiteStoreType)
+    }
+
     private static var persistentContainer: NSPersistentContainer = {
-        let name = "BookPlayerKit"
+        let name = "BookPlayer"
         let groupIdentifier = "group.com.tortugapower.audiobookplayer.files"
         let container = NSPersistentContainer(name: name)
 
         var persistentStoreDescriptions: NSPersistentStoreDescription
 
-        let storeUrl =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)!.appendingPathComponent("\(name).sqlite")
+        let storeUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)!.appendingPathComponent("\(name).sqlite")
 
         let description = NSPersistentStoreDescription()
         description.shouldInferMappingModelAutomatically = true
@@ -43,7 +69,7 @@ public class DataManager {
 
         container.persistentStoreDescriptions = [NSPersistentStoreDescription(url: FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)!.appendingPathComponent("\(name).sqlite"))]
 
-        container.loadPersistentStores(completionHandler: { (_, error) in
+        container.loadPersistentStores(completionHandler: { _, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
@@ -60,7 +86,7 @@ public class DataManager {
         return self.persistentContainer.newBackgroundContext()
     }
 
-    public class func saveContext () {
+    public class func saveContext() {
         let context = self.persistentContainer.viewContext
 
         if context.hasChanges {

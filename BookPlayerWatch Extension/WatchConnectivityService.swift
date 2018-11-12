@@ -9,7 +9,6 @@
 import WatchConnectivity
 
 class WatchConnectivityService: NSObject, WCSessionDelegate {
-
     static let sharedManager = WatchConnectivityService()
     private override init() {
         super.init()
@@ -18,15 +17,15 @@ class WatchConnectivityService: NSObject, WCSessionDelegate {
     private let session: WCSession = WCSession.default
 
     func startSession() {
-        session.delegate = self
-        session.activate()
+        self.session.delegate = self
+        self.session.activate()
     }
 
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         print("Session activation did complete")
     }
 
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
         print("========= derp: ", applicationContext)
     }
 

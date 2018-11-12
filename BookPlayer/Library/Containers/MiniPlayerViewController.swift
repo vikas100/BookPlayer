@@ -6,9 +6,9 @@
 //  Copyright © 2018 Tortuga Power. All rights reserved.
 //
 
+import BookPlayerKit
 import MarqueeLabelSwift
 import UIKit
-import BookPlayerKit
 
 class MiniPlayerViewController: PlayerContainerViewController, UIGestureRecognizerDelegate {
     @IBOutlet private weak var miniPlayerBlur: UIVisualEffectView!

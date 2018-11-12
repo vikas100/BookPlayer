@@ -7,8 +7,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Chapter)
 public class Chapter: NSManagedObject, Codable {
@@ -33,7 +33,7 @@ public class Chapter: NSManagedObject, Codable {
         guard let contextUserInfoKey = CodingUserInfoKey.context,
             let managedObjectContext = decoder.userInfo[contextUserInfoKey] as? NSManagedObjectContext,
             let entity = NSEntityDescription.entity(forEntityName: "Chapter", in: managedObjectContext) else {
-                fatalError("Failed to decode Chapter")
+            fatalError("Failed to decode Chapter")
         }
         self.init(entity: entity, insertInto: nil)
 

@@ -6,10 +6,10 @@
 //  Copyright © 2018 Tortuga Power. All rights reserved.
 //
 
+import BookPlayerKit
 import MediaPlayer
 import SwiftReorder
 import UIKit
-import BookPlayerKit
 
 // swiftlint:disable file_length
 
