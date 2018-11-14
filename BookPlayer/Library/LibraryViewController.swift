@@ -35,7 +35,7 @@ class LibraryViewController: BaseListViewController, UIGestureRecognizerDelegate
             self.migrateCoreDataStack()
             UserDefaults.standard.set(true, forKey: Constants.UserDefaults.appGroupsMigration.rawValue)
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWatchContext), name: .NSManagedObjectContextObjectsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateWatchContext(notification:)), name: .NSManagedObjectContextObjectsDidChange, object: nil)
 
         self.loadLibrary()
 
@@ -404,7 +404,25 @@ extension LibraryViewController {
         }
     }
 
-    @objc func updateWatchContext() {
+    @objc func updateWatchContext(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+
+        var shouldContinue = false
+
+        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>,
+            inserts.count > 0 {
+            shouldContinue = true
+        }
+
+        if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
+            deletes.count > 0 {
+            shouldContinue = true
+        }
+
+        guard shouldContinue else {
+            return
+        }
+
         WatchConnectivityService.shared.startSession()
 
         if let jsonData = try? JSONEncoder().encode(self.library) {
