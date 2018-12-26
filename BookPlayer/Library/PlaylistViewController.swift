@@ -142,7 +142,7 @@ class PlaylistViewController: ItemListViewController {
                 self.move(selectedItems, to: selectedPlaylist)
             }
 
-            let nav = UINavigationController(rootViewController: vc)
+            let nav = AppNavigationController(rootViewController: vc)
             self.present(nav, animated: true, completion: nil)
         }
 
@@ -180,7 +180,7 @@ class PlaylistViewController: ItemListViewController {
         }))
 
         alert.addAction(UIAlertAction(title: "Delete completely", style: .destructive, handler: { _ in
-            self.delete(books)
+            self.delete(books, mode: .deep)
         }))
 
         self.present(alert, animated: true, completion: nil)
