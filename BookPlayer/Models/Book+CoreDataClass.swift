@@ -38,6 +38,10 @@ public class Book: LibraryItem {
         return !(self.chapters?.array.isEmpty ?? true)
     }
 
+    override func info() -> String {
+        return self.author
+    }
+
     // TODO: This is a makeshift version of a proper completion property.
     // See https://github.com/TortugaPower/BookPlayer/issues/201
     override var isCompleted: Bool {
