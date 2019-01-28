@@ -251,7 +251,7 @@ class ItemListViewController: UIViewController, ItemList, ItemListAlerts, ItemLi
             }
         }
         self.tableView.beginUpdates()
-        self.tableView.reloadSections(IndexSet(integer: Section.library.rawValue), with: .none)
+        self.tableView.reloadSections(IndexSet(integer: Section.data.rawValue), with: .none)
         self.tableView.endUpdates()
         CATransaction.commit()
         self.toggleEmptyStateView()
@@ -265,7 +265,7 @@ class ItemListViewController: UIViewController, ItemList, ItemListAlerts, ItemLi
         guard
             let currentBook = PlayerManager.shared.currentBook,
             let index = self.library.itemIndex(with: currentBook.fileURL),
-            let bookCell = self.tableView.cellForRow(at: IndexPath(row: index, section: .library)) as? BookCellView
+            let bookCell = self.tableView.cellForRow(at: IndexPath(row: index, section: .data)) as? BookCellView
         else {
             return
         }
@@ -277,7 +277,7 @@ class ItemListViewController: UIViewController, ItemList, ItemListAlerts, ItemLi
         guard
             let book = PlayerManager.shared.currentBook,
             let index = self.library.itemIndex(with: book.fileURL),
-            let bookCell = self.tableView.cellForRow(at: IndexPath(row: index, section: .library)) as? BookCellView
+            let bookCell = self.tableView.cellForRow(at: IndexPath(row: index, section: .data)) as? BookCellView
         else {
             return
         }
@@ -291,7 +291,7 @@ class ItemListViewController: UIViewController, ItemList, ItemListAlerts, ItemLi
             let book = userInfo["book"] as? Book,
             !book.isFault,
             let index = self.library.itemIndex(with: book.fileURL),
-            let bookCell = self.tableView.cellForRow(at: IndexPath(row: index, section: .library)) as? BookCellView
+            let bookCell = self.tableView.cellForRow(at: IndexPath(row: index, section: .data)) as? BookCellView
         else {
             return
         }
@@ -312,7 +312,7 @@ class ItemListViewController: UIViewController, ItemList, ItemListAlerts, ItemLi
             }
 
             return false
-        }), let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: .library)) as? BookCellView else {
+        }), let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: .data)) as? BookCellView else {
             return
         }
 
@@ -360,7 +360,7 @@ extension ItemListViewController: ItemListFeedback {
 
 extension ItemListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == Section.library.rawValue
+        return section == Section.data.rawValue
             ? self.items.count
             : 1
     }
@@ -422,7 +422,7 @@ extension ItemListViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.sectionValue == .library
+        return indexPath.sectionValue == .data
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
@@ -436,7 +436,7 @@ extension ItemListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         guard tableView.isEditing else { return indexPath }
 
-        guard indexPath.sectionValue == .library else { return nil }
+        guard indexPath.sectionValue == .data else { return nil }
 
         return indexPath
     }
@@ -462,11 +462,11 @@ extension ItemListViewController: TableViewReorderDelegate {
     @objc func tableView(_ tableView: UITableView, reorderRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {}
 
     func tableView(_ tableView: UITableView, canReorderRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.sectionValue == .library
+        return indexPath.sectionValue == .data
     }
 
     func tableView(_ tableView: UITableView, targetIndexPathForReorderFromRowAt sourceIndexPath: IndexPath, to proposedDestinationIndexPath: IndexPath, snapshot: UIView?) -> IndexPath {
-        guard proposedDestinationIndexPath.sectionValue == .library else {
+        guard proposedDestinationIndexPath.sectionValue == .data else {
             return sourceIndexPath
         }
 
@@ -480,7 +480,7 @@ extension ItemListViewController: TableViewReorderDelegate {
     }
 
     func tableView(_ tableView: UITableView, sourceIndexPath: IndexPath, overIndexPath: IndexPath, snapshot: UIView) {
-        guard overIndexPath.sectionValue == .library else {
+        guard overIndexPath.sectionValue == .data else {
             return
         }
 

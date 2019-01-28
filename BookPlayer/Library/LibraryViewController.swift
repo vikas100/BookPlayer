@@ -371,7 +371,7 @@ extension LibraryViewController {
 
 extension LibraryViewController {
     func tableView(_: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        guard indexPath.sectionValue == .library else { return nil }
+        guard indexPath.sectionValue == .data else { return nil }
 
         let item = items[indexPath.row]
 
@@ -458,7 +458,7 @@ extension LibraryViewController {
 
         tableView.deselectRow(at: indexPath, animated: true)
 
-        guard indexPath.sectionValue == .library else {
+        guard indexPath.sectionValue == .data else {
             if indexPath.sectionValue == .add {
                 self.addAction()
             }
@@ -501,7 +501,7 @@ extension LibraryViewController {
 
 extension LibraryViewController {
     override func tableView(_ tableView: UITableView, reorderRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        guard destinationIndexPath.sectionValue == .library else {
+        guard destinationIndexPath.sectionValue == .data else {
             return
         }
 
@@ -514,7 +514,7 @@ extension LibraryViewController {
     }
 
     override func tableViewDidFinishReordering(_ tableView: UITableView, from initialSourceIndexPath: IndexPath, to finalDestinationIndexPath: IndexPath, dropped overIndexPath: IndexPath?) {
-        guard let overIndexPath = overIndexPath, overIndexPath.sectionValue == .library, let book = self.items[finalDestinationIndexPath.row] as? Book else {
+        guard let overIndexPath = overIndexPath, overIndexPath.sectionValue == .data, let book = self.items[finalDestinationIndexPath.row] as? Book else {
             return
         }
 
@@ -566,8 +566,8 @@ extension LibraryViewController {
                 DataManager.saveContext()
 
                 self.tableView.beginUpdates()
-                self.tableView.deleteRows(at: [IndexPath(row: minIndex, section: .library), IndexPath(row: minIndex + 1, section: .library)], with: .fade)
-                self.tableView.insertRows(at: [IndexPath(row: minIndex, section: .library)], with: .fade)
+                self.tableView.deleteRows(at: [IndexPath(row: minIndex, section: .data), IndexPath(row: minIndex + 1, section: .data)], with: .fade)
+                self.tableView.insertRows(at: [IndexPath(row: minIndex, section: .data)], with: .fade)
                 self.tableView.endUpdates()
             })
         }
