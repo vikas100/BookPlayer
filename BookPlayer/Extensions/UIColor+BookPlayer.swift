@@ -41,4 +41,14 @@ extension UIColor {
 
         return B
     }
+
+    public var saturation: CGFloat {
+        var H: CGFloat = 0
+        var S: CGFloat = 0
+        var B: CGFloat = 0
+        var A: CGFloat = 0
+        self.getHue(&H, saturation: &S, brightness: &B, alpha: &A)
+
+        return S
+    }
 }

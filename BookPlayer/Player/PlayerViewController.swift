@@ -34,6 +34,7 @@ class PlayerViewController: UIViewController, UIGestureRecognizerDelegate {
     let darknessThreshold: CGFloat = 0.2
 
     private var themedStatusBarStyle: UIStatusBarStyle?
+    private var blurEffectView: UIVisualEffectView?
 
     // MARK: - Lifecycle
 
@@ -135,17 +136,7 @@ class PlayerViewController: UIViewController, UIGestureRecognizerDelegate {
             return
         }
 
-        let blur = UIBlurEffect(style: currentBook.artworkColors.useDarkVariant ? UIBlurEffectStyle.dark : UIBlurEffectStyle.light)
-        let blurView = UIVisualEffectView(effect: blur)
-
-        blurView.frame = self.view.bounds
-
-        self.backgroundImage.addSubview(blurView)
         self.backgroundImage.image = currentBook.artwork
-
-        // Apply the blurred view in relation to the brightness and luminance of the background color.
-        // This makes darker backgrounds stay interesting
-        self.backgroundImage.alpha = 0.1 + min((1 - currentBook.artworkColors.backgroundColor.luminance) * (1 - currentBook.artworkColors.backgroundColor.brightness), 0.7)
 
         // Solution thanks to https://forums.developer.apple.com/thread/63166#180445
         self.modalPresentationCapturesStatusBarAppearance = true
@@ -360,9 +351,10 @@ class PlayerViewController: UIViewController, UIGestureRecognizerDelegate {
 
 extension PlayerViewController: Themeable {
     func applyTheme(_ theme: Theme) {
-        let appliedTheme: Theme = theme.useDarkVariant ? theme : self.currentBook.artworkColors
+        let appliedTheme: Theme = self.currentBook.artworkColors
+        appliedTheme.useDarkVariant = themeProvider.useDarkVariant
 
-        self.themedStatusBarStyle = appliedTheme.useDarkVariant
+        self.themedStatusBarStyle = theme.useDarkVariant
             ? .lightContent
             : .default
         setNeedsStatusBarAppearanceUpdate()
@@ -370,5 +362,19 @@ extension PlayerViewController: Themeable {
         self.view.backgroundColor = appliedTheme.backgroundColor
         self.bottomToolbar.tintColor = appliedTheme.detailColor
         self.closeButton.tintColor = appliedTheme.detailColor
+
+        // Apply the blurred view in relation to the brightness and luminance of the background color.
+        // This makes darker backgrounds stay interesting
+        self.backgroundImage.alpha = 0.1 + min((1 - appliedTheme.backgroundColor.luminance) * (1 - appliedTheme.backgroundColor.brightness), 0.7)
+
+        self.blurEffectView?.removeFromSuperview()
+
+        let blur = UIBlurEffect(style: theme.useDarkVariant ? UIBlurEffectStyle.dark : UIBlurEffectStyle.light)
+        let blurView = UIVisualEffectView(effect: blur)
+
+        blurView.frame = self.view.bounds
+
+        self.blurEffectView = blurView
+        self.backgroundImage.addSubview(blurView)
     }
 }

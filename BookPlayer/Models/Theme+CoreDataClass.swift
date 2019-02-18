@@ -48,7 +48,7 @@ public class Theme: NSManagedObject {
             self.init(entity: entity, insertInto: context)
 
             let colorCube = CCColorCube()
-            var colors: [UIColor] = colorCube.extractColors(from: image, flags: CCOnlyDistinctColors, count: 8)!
+            var colors: [UIColor] = colorCube.extractColors(from: image, flags: CCOnlyDistinctColors, count: 4)!
 
             guard let averageColor = image.averageColor() else {
                 throw ArtworkColorsError.averageColorFailed
@@ -102,14 +102,29 @@ public class Theme: NSManagedObject {
             }
         }
 
-        self.defaultBackgroundHex = colorsToSet[0].cssHex
-        self.defaultPrimaryHex = colorsToSet[1].cssHex
-        self.defaultSecondaryHex = colorsToSet[2].cssHex
-        self.defaultAccentHex = colorsToSet[3].cssHex
-        self.darkBackgroundHex = colorsToSet[4].cssHex
-        self.darkPrimaryHex = colorsToSet[5].cssHex
-        self.darkSecondaryHex = colorsToSet[6].cssHex
-        self.darkAccentHex = colorsToSet[7].cssHex
+        let lightSorted = colorsToSet.sorted { (c1, c2) -> Bool in
+            return c2.isDarker(than: c1)
+        }
+
+        let darkSorted = colorsToSet.sorted { (c1, c2) -> Bool in
+            return c1.isDarker(than: c2)
+        }
+
+        // background
+        self.darkBackgroundHex = self.getBackgroundColor(from: darkSorted, darkVariant: true) ?? "050505"
+        self.defaultBackgroundHex = self.getBackgroundColor(from: lightSorted, darkVariant: false) ?? "FAFAFA"
+
+        // primary
+        self.darkPrimaryHex = self.getPrimaryColor(from: darkSorted, darkVariant: true) ?? "EEEEEE"
+        self.defaultPrimaryHex = self.getPrimaryColor(from: lightSorted, darkVariant: false) ?? "111111"
+
+        // tertiary
+        self.darkAccentHex = self.getHighlightColor(from: darkSorted, darkVariant: true) ?? "7685B3"
+        self.defaultAccentHex = self.getHighlightColor(from: lightSorted, darkVariant: false) ?? "7685B3"
+
+        // secondary
+        self.defaultSecondaryHex = self.defaultPrimaryColor.overlayBlack.cssHex
+        self.darkSecondaryHex = self.darkPrimaryColor.overlayWhite.cssHex
     }
 
     // Default colors
@@ -118,6 +133,96 @@ public class Theme: NSManagedObject {
         self.init(entity: entity, insertInto: context)
 
         self.setColorsFromArray()
+    }
+
+    func getBackgroundColor(from colors: [UIColor], darkVariant: Bool) -> String? {
+        let color = colors.first { (color) -> Bool in
+            let saturationCondition = color.saturation < 0.5
+            let brightnessCondition = darkVariant
+                ? color.brightness < 0.6
+                : color.brightness > 0.6
+
+            return saturationCondition && brightnessCondition
+        }
+
+        guard color == nil else { return color!.cssHex }
+
+        guard let peakColor = colors.last else { return nil }
+
+        // Handle no color meeting standard conditions
+
+        let overlayedColor = darkVariant
+            ? peakColor.overlayBlack
+            : peakColor.overlayWhite
+
+        let saturationCondition = overlayedColor.saturation < 0.5
+
+        let brightnessCondition = darkVariant
+            ? overlayedColor.brightness < 0.6
+            : overlayedColor.brightness > 0.6
+
+        guard saturationCondition && brightnessCondition else { return nil }
+
+        return overlayedColor.cssHex
+    }
+
+    func getPrimaryColor(from colors: [UIColor], darkVariant: Bool) -> String? {
+        let bgColor = darkVariant
+            ? UIColor(hex: self.darkBackgroundHex)
+            : UIColor(hex: self.defaultBackgroundHex)
+
+        let color = colors.first { (color) -> Bool in
+            let contrastCondition = color.contrastRatio(with: bgColor) > 0.3
+            let brightnessCondition = darkVariant
+                ? color.brightness > 0.3
+                : color.brightness < 0.3
+
+            return brightnessCondition && contrastCondition
+        }
+
+        guard color == nil else { return color!.cssHex }
+
+        guard let peakColor = colors.last else { return nil }
+
+        // Handle no color meeting standard conditions
+
+        let overlayedColor = darkVariant
+            ? peakColor.overlayWhite
+            : peakColor.overlayBlack
+
+        let contrastCondition = overlayedColor.contrastRatio(with: bgColor) > 0.3
+
+        let brightnessCondition = darkVariant
+            ? overlayedColor.brightness < 0.3
+            : overlayedColor.brightness > 0.3
+
+        guard contrastCondition && brightnessCondition else { return nil }
+
+        return overlayedColor.cssHex
+    }
+
+    func getHighlightColor(from colors: [UIColor], darkVariant: Bool) -> String? {
+        let bgColor = darkVariant
+            ? UIColor(hex: self.darkBackgroundHex)
+            : UIColor(hex: self.defaultBackgroundHex)
+
+        let candidates = colors.compactMap { (color) -> UIColor? in
+            if color.brightness < bgColor.brightness {
+                return color
+            }
+
+            return nil
+        }
+
+        let primaryColor = darkVariant
+            ? UIColor(hex: self.darkPrimaryHex)
+            : UIColor(hex: self.defaultPrimaryHex)
+
+        let finalSort = candidates.sorted { (c1, c2) -> Bool in
+            return c1.contrastRatio(with: primaryColor) > c2.contrastRatio(with: primaryColor)
+        }
+
+        return finalSort.first?.cssHex
     }
 }
 
@@ -130,6 +235,10 @@ extension Theme {
 
     var defaultPrimaryColor: UIColor {
         return UIColor(hex: self.defaultPrimaryHex)
+    }
+
+    var darkPrimaryColor: UIColor {
+        return UIColor(hex: self.darkPrimaryHex)
     }
 
     var defaultSecondaryColor: UIColor {
