@@ -115,12 +115,20 @@ public class Theme: NSManagedObject {
         self.defaultBackgroundHex = self.getBackgroundColor(from: lightSorted, darkVariant: false) ?? "FAFAFA"
 
         // primary
-        self.darkPrimaryHex = self.getPrimaryColor(from: darkSorted, darkVariant: true) ?? "EEEEEE"
-        self.defaultPrimaryHex = self.getPrimaryColor(from: lightSorted, darkVariant: false) ?? "111111"
+        self.darkPrimaryHex = self.getPrimaryColor(from: darkSorted,
+                                                   backgroundColor: self.darkBackgroundColor,
+                                                   darkVariant: true) ?? "EEEEEE"
+        self.defaultPrimaryHex = self.getPrimaryColor(from: lightSorted,
+                                                      backgroundColor: self.defaultBackgroundColor,
+                                                      darkVariant: false) ?? "111111"
 
         // tertiary
-        self.darkAccentHex = self.getHighlightColor(from: darkSorted, darkVariant: true) ?? "7685B3"
-        self.defaultAccentHex = self.getHighlightColor(from: lightSorted, darkVariant: false) ?? "7685B3"
+        self.darkAccentHex = self.getHighlightColor(from: darkSorted,
+                                                    backgroundColor: self.darkBackgroundColor,
+                                                    darkVariant: true) ?? "7685B3"
+        self.defaultAccentHex = self.getHighlightColor(from: lightSorted,
+                                                       backgroundColor: self.defaultBackgroundColor,
+                                                       darkVariant: false) ?? "7685B3"
 
         // secondary
         self.defaultSecondaryHex = self.defaultPrimaryColor.overlayBlack.cssHex
@@ -137,12 +145,12 @@ public class Theme: NSManagedObject {
 
     func getBackgroundColor(from colors: [UIColor], darkVariant: Bool) -> String? {
         let color = colors.first { (color) -> Bool in
-            let saturationCondition = color.saturation < 0.5
+            //let saturationCondition = color.saturation < 0.5
             let brightnessCondition = darkVariant
-                ? color.brightness < 0.6
-                : color.brightness > 0.6
+                ? color.brightness < 0.3
+                : color.brightness > 0.8
 
-            return saturationCondition && brightnessCondition
+            return brightnessCondition // && saturationCondition
         }
 
         guard color == nil else { return color!.cssHex }
@@ -158,23 +166,19 @@ public class Theme: NSManagedObject {
         let saturationCondition = overlayedColor.saturation < 0.5
 
         let brightnessCondition = darkVariant
-            ? overlayedColor.brightness < 0.6
-            : overlayedColor.brightness > 0.6
+            ? overlayedColor.brightness < 0.3
+            : overlayedColor.brightness > 0.8
 
         guard saturationCondition && brightnessCondition else { return nil }
 
         return overlayedColor.cssHex
     }
 
-    func getPrimaryColor(from colors: [UIColor], darkVariant: Bool) -> String? {
-        let bgColor = darkVariant
-            ? UIColor(hex: self.darkBackgroundHex)
-            : UIColor(hex: self.defaultBackgroundHex)
-
+    func getPrimaryColor(from colors: [UIColor], backgroundColor: UIColor, darkVariant: Bool) -> String? {
         let color = colors.first { (color) -> Bool in
-            let contrastCondition = color.contrastRatio(with: bgColor) > 0.3
+            let contrastCondition = color.contrastRatio(with: backgroundColor) > 13
             let brightnessCondition = darkVariant
-                ? color.brightness > 0.3
+                ? color.brightness > 0.8
                 : color.brightness < 0.3
 
             return brightnessCondition && contrastCondition
@@ -190,10 +194,10 @@ public class Theme: NSManagedObject {
             ? peakColor.overlayWhite
             : peakColor.overlayBlack
 
-        let contrastCondition = overlayedColor.contrastRatio(with: bgColor) > 0.3
+        let contrastCondition = overlayedColor.contrastRatio(with: backgroundColor) > 13
 
         let brightnessCondition = darkVariant
-            ? overlayedColor.brightness < 0.3
+            ? overlayedColor.brightness < 0.8
             : overlayedColor.brightness > 0.3
 
         guard contrastCondition && brightnessCondition else { return nil }
@@ -201,13 +205,10 @@ public class Theme: NSManagedObject {
         return overlayedColor.cssHex
     }
 
-    func getHighlightColor(from colors: [UIColor], darkVariant: Bool) -> String? {
-        let bgColor = darkVariant
-            ? UIColor(hex: self.darkBackgroundHex)
-            : UIColor(hex: self.defaultBackgroundHex)
-
+    func getHighlightColor(from colors: [UIColor], backgroundColor: UIColor, darkVariant: Bool) -> String? {
         let candidates = colors.compactMap { (color) -> UIColor? in
-            if color.brightness < bgColor.brightness {
+            if color.brightness < backgroundColor.brightness {
+                print(color.cssHex)
                 return color
             }
 
@@ -218,8 +219,8 @@ public class Theme: NSManagedObject {
             ? UIColor(hex: self.darkPrimaryHex)
             : UIColor(hex: self.defaultPrimaryHex)
 
-        let finalSort = candidates.sorted { (c1, c2) -> Bool in
-            return c1.contrastRatio(with: primaryColor) > c2.contrastRatio(with: primaryColor)
+        let finalSort = colors.sorted { (c1, c2) -> Bool in
+            return c2.contrastRatio(with: primaryColor) > c1.contrastRatio(with: primaryColor)
         }
 
         return finalSort.first?.cssHex
@@ -231,6 +232,10 @@ public class Theme: NSManagedObject {
 extension Theme {
     var defaultBackgroundColor: UIColor {
         return UIColor(hex: self.defaultBackgroundHex)
+    }
+
+    var darkBackgroundColor: UIColor {
+        return UIColor(hex: self.darkBackgroundHex)
     }
 
     var defaultPrimaryColor: UIColor {

@@ -39,7 +39,7 @@ extension UIColor {
         var A: CGFloat = 0
         self.getHue(&H, saturation: &S, brightness: &B, alpha: &A)
 
-        return B
+        return self.cssHex == "#ffffff" ? 1.0 : B
     }
 
     public var saturation: CGFloat {
